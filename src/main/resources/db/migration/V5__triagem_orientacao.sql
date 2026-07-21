@@ -1,0 +1,1 @@
+ALTER TABLE triagem ADD COLUMN orientacao VARCHAR(1000);

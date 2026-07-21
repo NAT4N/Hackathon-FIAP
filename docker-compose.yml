@@ -1,0 +1,73 @@
+services:
+  db:
+    image: postgres:16
+    container_name: atendimento-sus-db
+    environment:
+      POSTGRES_DB: atendimento_sus
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d atendimento_sus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ollama:
+    image: ollama/ollama
+    container_name: atendimento-sus-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Baixa o modelo uma única vez e encerra; o app só sobe após isso concluir.
+  ollama-pull:
+    image: ollama/ollama
+    container_name: atendimento-sus-ollama-pull
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    entrypoint: ["/bin/sh", "-c", "ollama pull llama3.2:3b"]
+    restart: "no"
+
+  app:
+    build: .
+    container_name: atendimento-sus-app
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama-pull:
+        condition: service_completed_successfully
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: atendimento_sus
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: troque-esta-chave-em-producao-com-no-minimo-32-bytes!!
+      JWT_EXPIRATION_MINUTES: 120
+      APP_AI_ENABLED: "true"
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.2:3b
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q UP || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  pgdata:
+  ollama_models:
