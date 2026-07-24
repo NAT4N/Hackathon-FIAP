@@ -1,0 +1,18 @@
+<svg width="900" height="620" viewBox="0 0 900 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="620" rx="48" fill="#EAF6F7"/>
+  <circle cx="725" cy="128" r="92" fill="#BDE7DE"/><circle cx="169" cy="474" r="122" fill="#D5EEF2"/>
+  <rect x="299" y="88" width="320" height="456" rx="34" fill="#123F52"/>
+  <rect x="320" y="116" width="278" height="398" rx="18" fill="#F8FCFC"/>
+  <rect x="348" y="147" width="104" height="18" rx="9" fill="#64B6AC"/><rect x="348" y="184" width="214" height="12" rx="6" fill="#B5CED1"/>
+  <rect x="348" y="223" width="222" height="92" rx="18" fill="#DDF3EF"/>
+  <path d="M377 269h22l15-27 22 57 19-30h35" stroke="#E65A4F" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="348" y="338" width="222" height="48" rx="14" fill="#123F52"/><path d="M372 362h118" stroke="#FFF" stroke-width="10" stroke-linecap="round"/>
+  <rect x="348" y="408" width="148" height="12" rx="6" fill="#B5CED1"/><rect x="348" y="434" width="196" height="12" rx="6" fill="#B5CED1"/>
+  <path d="M155 301c0-43 35-78 78-78s78 35 78 78v116H155V301Z" fill="#64B6AC"/>
+  <circle cx="233" cy="194" r="58" fill="#F0B68B"/><path d="M176 188c8-70 103-70 115 0-35-19-80-21-115 0Z" fill="#123F52"/>
+  <path d="M207 267h52l-8 49h-36l-8-49Z" fill="#FFF"/><path d="M233 275v27" stroke="#E65A4F" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="719" cy="386" r="93" fill="#F0B68B"/><path d="M625 486c12-93 174-93 188 0" fill="#123F52"/><path d="M682 373c15 12 42 12 57 0" stroke="#123F52" stroke-width="7" stroke-linecap="round"/>
+  <path d="M713 347c13-25 35-38 57-30-10-49-95-52-112-4 21-7 42 8 55 34Z" fill="#365C6E"/>
+  <path d="M663 278l22 16m89-16-22 16" stroke="#64B6AC" stroke-width="12" stroke-linecap="round"/>
+  <path d="M678 255c22-37 89-37 111 0" stroke="#64B6AC" stroke-width="12" stroke-linecap="round"/>
+</svg>
