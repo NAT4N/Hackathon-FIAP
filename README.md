@@ -20,7 +20,8 @@ MVP back-end para apoiar o acolhimento no SUS. O sistema permite cadastrar pacie
 - [Diagrama de arquitetura](docs/diagramas/arquitetura.svg)
 - [Diagrama de fluxo de triagem](docs/diagramas/fluxo-triagem.svg)
 - [Collection Postman](postman/Atendimento-SUS.postman_collection.json)
-- [Slides e roteiro do pitch](apresentacao/ROTEIRO-PITCH.md)
+- [Slides e roteiro completo do pitch](apresentacao/ROTEIRO-PITCH.md)
+- [Roteiro resumido e natural do pitch](apresentacao/ROTEIRO-PITCH-RESUMIDO.md)
 
 ## Pré-requisitos
 
