@@ -39,8 +39,11 @@
 
 ## Slide 6 — MVP e arquitetura (4:10–5:05)
 
-> O MVP foi construído com Java 21 e Spring Boot. Usamos PostgreSQL e Flyway para persistência e versionamento do banco, JWT para autenticação, Docker para subir o ambiente completo e OpenAPI/Postman para demonstrar a API.
-> A arquitetura separa controllers, casos de uso, regras de domínio e adaptadores externos. Por isso, a regra de risco não fica acoplada ao Ollama, e a IA pode ser desligada sem quebrar a aplicação.
+> O MVP foi construído com Java 21 e Spring Boot. Utilizamos PostgreSQL e Flyway para persistência e versionamento do banco, JWT para autenticação, Docker para executar o ambiente completo e OpenAPI e Postman para documentar e demonstrar a API.
+> A solução utiliza uma arquitetura inspirada em Arquitetura Hexagonal, também conhecida como Ports and Adapters. Os controllers funcionam como adaptadores de entrada, os casos de uso organizam o fluxo da aplicação, o domínio concentra as regras de negócio e as portas de saída isolam integrações como PostgreSQL e Ollama.
+> Com essa separação, a regra de classificação de risco não depende da inteligência artificial. O Ollama permanece na borda da arquitetura como um adaptador assistivo e pode ser desligado ou substituído sem interromper a funcionalidade principal da triagem.
+
+**Frase de impacto:** “A IA está na borda da arquitetura; a decisão de risco permanece no centro do domínio.”
 
 ## Slide 7 — Impacto e validação (5:05–6:00)
 
