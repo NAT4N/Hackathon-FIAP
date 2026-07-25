@@ -67,10 +67,10 @@ public class OllamaAssistenteAdapter implements AssistenteTriagemPort {
             String system = """
                     Você é um assistente de triagem clínica. A partir da queixa do paciente em
                     português, identifique os sintomas presentes e mapeie APENAS para os valores
-                    exatos deste enum: %s. Além disso, sugira perguntas complementares, alertas para
-                    conferência e campos ausentes para revisão humana. Não faça diagnóstico, prescrição,
-                    prognóstico nem classificação de risco. Gere no máximo 5 itens por lista.
-                    Responda somente em JSON. Não invente sintomas.
+                    exatos deste enum: %s. Gere obrigatoriamente um resumo factual e curto da queixa.
+                    Além disso, sugira perguntas complementares, alertas para conferência e campos ausentes
+                    para revisão humana. Não faça diagnóstico, prescrição, prognóstico nem classificação de
+                    risco. Gere no máximo 5 itens por lista. Responda somente em JSON. Não invente sintomas.
                     """.formatted(valoresEnum);
 
             Map<String, Object> schema = Map.of(
@@ -83,7 +83,9 @@ public class OllamaAssistenteAdapter implements AssistenteTriagemPort {
                             "perguntasComplementares", arraySchema(),
                             "alertasParaConferencia", arraySchema(),
                             "camposAusentes", arraySchema()),
-                    "required", List.of("sintomas"));
+                    "required", List.of("sintomas", "resumo", "perguntasComplementares",
+                            "alertasParaConferencia", "camposAusentes"),
+                    "additionalProperties", false);
 
             String content = chat(system, contextoParaPrompt(contexto), schema);
             JsonNode raiz = objectMapper.readTree(content);
@@ -94,7 +96,11 @@ public class OllamaAssistenteAdapter implements AssistenteTriagemPort {
                     parseSintoma(n.asText()).ifPresent(sintomas::add);
                 }
             }
-            String resumo = raiz.hasNonNull("resumo") ? raiz.get("resumo").asText() : null;
+            String resumo = textoLimitado(raiz.path("resumo").asText(null));
+            if (resumo == null) {
+                log.warn("Ollama retornou análise sem resumo; utilizando a queixa original como fallback");
+                resumo = textoLimitado(contexto.queixaLivre());
+            }
             return new AnaliseClinica(sintomas, resumo,
                     textosLimitados(raiz.path("perguntasComplementares")),
                     textosLimitados(raiz.path("alertasParaConferencia")),

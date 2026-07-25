@@ -47,7 +47,7 @@ class OllamaAssistenteAdapterTest {
     }
 
     @Test
-    void ignoraValoresDesconhecidosDoEnum() {
+    void ignoraValoresDesconhecidosDoEnumEUsaQueixaQuandoResumoAusente() {
         Fixture f = novo();
         String content = "{\"sintomas\":[\"DOR_TORACICA\",\"XPTO_INVALIDO\"]}";
         String body = "{\"message\":{\"content\":" + quote(content) + "}}";
@@ -57,6 +57,7 @@ class OllamaAssistenteAdapterTest {
         AnaliseClinica r = f.adapter().analisar(contexto("dor no peito"));
 
         assertThat(r.sintomasSugeridos()).containsExactly(Sintoma.DOR_TORACICA);
+        assertThat(r.resumo()).isEqualTo("dor no peito");
     }
 
     @Test
