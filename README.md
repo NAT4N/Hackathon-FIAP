@@ -17,9 +17,57 @@ MVP back-end para apoiar o acolhimento no SUS. O sistema permite cadastrar pacie
 ## Arquitetura e relatório
 
 - [Relatório do projeto](docs/RELATORIO-PROJETO.md)
-- [Diagrama de arquitetura](docs/diagramas/arquitetura.svg)
-- [Diagrama de fluxo de triagem](docs/diagramas/fluxo-triagem.svg)
+- [Diagramas técnicos (catálogo completo)](docs/diagramas/README.md)
 - [Collection Postman](postman/Atendimento-SUS.postman_collection.json)
+
+## Diagramas técnicos
+
+Diagramas gerados a partir do código-fonte. Os fontes Mermaid, o tema e o script de regeneração ficam em [`docs/diagramas/`](docs/diagramas/README.md).
+
+### Visão de arquitetura
+
+**Arquitetura em camadas (Ports & Adapters)** — camadas do sistema: clientes → filtro JWT → controllers (adapters de entrada) → casos de uso/serviços → domínio puro, com adapters de saída para PostgreSQL e Ollama.
+
+![Arquitetura em camadas](docs/diagramas/01-arquitetura-camadas.png)
+
+**Arquitetura hexagonal — contexto Triagem** — detalhe de um contexto: portas de entrada (use cases) e de saída (repositório e assistente de IA) com seus adapters, incluindo o fallback `NoOp` quando a IA está desligada.
+
+![Arquitetura hexagonal](docs/diagramas/02-arquitetura-hexagonal.png)
+
+
+### Dados e domínio
+
+**Modelo de dados (ER)** — esquema do banco (migrations Flyway): `usuario`, `paciente`, `triagem`, `triagem_sintoma` e `agendamento`, com chaves e relacionamentos.
+
+![Modelo de dados ER](docs/diagramas/04-modelo-dados-er.png)
+
+**Classes do domínio** — agregados, value objects e enums dos quatro contextos, além dos serviços de domínio (`ClassificadorRiscoService`, `AgendaDomainService`).
+
+![Classes do domínio](docs/diagramas/05-classes-dominio.png)
+
+### Fluxos (diagramas de sequência)
+
+**Realizar triagem** — o risco é decidido pelo classificador determinístico; a orientação por IA é *best-effort* e degrada para nulo em caso de falha.
+
+![Fluxo de triagem](docs/diagramas/06-fluxo-triagem-sequencia.png)
+
+**Análise de queixa com IA (Ollama)** — extração de sintomas e sugestões a partir de texto livre, com degradação graciosa em erro ou timeout.
+
+![Fluxo de análise com IA](docs/diagramas/07-fluxo-analise-ia-sequencia.png)
+
+**Agendar consulta/exame** — prioridade derivada da triagem via ACL e verificação de conflito de agenda antes de persistir.
+
+![Fluxo de agendamento](docs/diagramas/08-fluxo-agendamento-sequencia.png)
+
+**Autenticação JWT** — login (rota pública) e requisição autenticada passando pelo filtro stateless.
+
+![Fluxo de autenticação](docs/diagramas/09-fluxo-autenticacao-sequencia.png)
+
+
+**Classificação de risco (estilo Protocolo de Manchester)** — árvore de decisão com os limiares reais do código; o primeiro critério satisfeito vence (VERMELHO → AZUL).
+
+![Classificação de risco](docs/diagramas/11-classificacao-risco.png)
+
 
 ## Pré-requisitos
 
