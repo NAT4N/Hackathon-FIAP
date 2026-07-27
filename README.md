@@ -16,13 +16,13 @@ MVP back-end para apoiar o acolhimento no SUS. O sistema permite cadastrar pacie
 
 ## Arquitetura e relatório
 
-- [Relatório do projeto](docs/RELATORIO-PROJETO.md)
-- [Diagramas técnicos (catálogo completo)](docs/diagramas/README.md)
+- [Relatório do projeto](docs/Projeto_SUS_Flow_Relatorio.pdf)
+- [Diagramas técnicos (catálogo completo)](docs/diagramas/)
 - [Collection Postman](postman/Atendimento-SUS.postman_collection.json)
 
 ## Diagramas técnicos
 
-Diagramas gerados a partir do código-fonte. Os fontes Mermaid, o tema e o script de regeneração ficam em [`docs/diagramas/`](docs/diagramas/README.md).
+Diagramas gerados a partir do código-fonte. Os fontes Mermaid, o tema e o script de regeneração ficam em [`docs/diagramas/`](docs/diagramas/).
 
 ### Visão de arquitetura
 
